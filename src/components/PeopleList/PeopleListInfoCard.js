@@ -6,9 +6,10 @@ import {
   fetchPeopleFilmsAsync
 } from '../../features/peopleFilmsSlice';
 
+import { List, Icon, Divider, Loader } from 'semantic-ui-react';
 import '../../style/components/PeopleList/PeopleListInfoCard.scss';
 
-const PeopleListInfoCard = ({ data }) => {
+const PeopleListInfoCard = ({ data, onClose }) => {
   const dispatch = useDispatch();
 
   const peopleFilms = useSelector(selectPeopleFilms);
@@ -18,63 +19,91 @@ const PeopleListInfoCard = ({ data }) => {
     dispatch(fetchPeopleFilmsAsync(data.films));
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  //   console.log('peopleFilms', peopleFilms);
-  //   console.log('peopleFilmsLoading', peopleFilmsLoading);
-  //   console.log('peopleFilmsError', peopleFilmsError);
-
   return (
-    <div className='info-card'>
-      <div className='text-bolder'>
-        <div className='text-bolder'>Name:</div>
-        <span>{data.name}</span>
+    <div className='info-card flex flex-col border-l-2 border-gray-100'>
+      <img
+        src='https://i.pinimg.com/originals/54/16/fb/5416fb0782218fb854aed8a923088a17.png'
+        alt='avator'
+      />
+
+      <div onClick={() => onClose(null)}>
+        <Icon
+          className='absolute top-3 right-3 cursor-pointer'
+          disabled
+          name='close'
+          color='yellow'
+          size='large'
+        />
       </div>
 
-      <br />
+      <div className='p-8 flex-grow overflow-auto'>
+        <div className='pb-4'>
+          <Divider horizontal>Name</Divider>
+          <div className='text-center font-black text-2xl'>{data.name}</div>
+        </div>
 
-      <div className='text-bolder'>
-        <div className='text-bolder'>Eye Color:</div>
-        <span>{data.eye_color}</span>
-      </div>
+        <div className='pb-4'>
+          <Divider horizontal>Gender</Divider>
+          <div className='text-center font-black text-2xl uppercase'>
+            {data.gender}
+          </div>
+        </div>
 
-      <br />
+        <div className='pb-4'>
+          <Divider horizontal>Height</Divider>
+          <div className='text-center font-black text-2xl uppercase'>
+            {data.height}
+          </div>
+        </div>
 
-      <div className='text-bolder'>
-        <div className='text-bolder'>Hair Color:</div>
-        <span>{data.hair_color}</span>
-      </div>
+        <div className='pb-4'>
+          <Divider horizontal>Eye Color</Divider>
+          <div className='text-center font-black text-2xl uppercase'>
+            {data.eye_color}
+          </div>
+        </div>
 
-      <br />
+        <div className='pb-4'>
+          <Divider horizontal>Hair Color</Divider>
+          <div className='text-center font-black text-2xl uppercase'>
+            {data.hair_color}
+          </div>
+        </div>
 
-      <div className='text-bolder'>
-        <div className='text-bolder'>Skin Color:</div>
-        <span>{data.skin_color}</span>
-      </div>
+        <div className='pb-4'>
+          <Divider horizontal>Skin Color</Divider>
+          <div className='text-center font-black text-2xl uppercase'>
+            {data.skin_color}
+          </div>
+        </div>
 
-      <br />
+        <div className='pb-4'>
+          <Divider horizontal>Mass</Divider>
+          <div className='text-center font-black text-2xl uppercase'>
+            {data.mass}
+          </div>
+        </div>
 
-      <div className='text-bolder'>
-        <div className='text-bolder'>Gender:</div>
-        <span>{data.gender}</span>
-      </div>
-
-      <br />
-
-      <div className='text-bolder'>
-        <div className='text-bolder'>Mass:</div>
-        <span>{data.mass}</span>
-      </div>
-
-      <br />
-
-      <div className='text-bolder'>
-        <div className='text-bolder'>Films:</div>
-        {peopleFilmsLoading ? (
-          <div>Loading...</div>
-        ) : (
-          peopleFilms.map((film) => {
-            return <div key={film.episode_id}>{film.title}</div>;
-          })
-        )}
+        <div className='pb-4'>
+          <Divider horizontal>Films</Divider>
+          <List>
+            {peopleFilmsLoading ? (
+              <Loader active inline='centered' />
+            ) : (
+              peopleFilms.map((film) => {
+                return (
+                  <List.Item
+                    className='text-center uppercase '
+                    value='*'
+                    key={film.episode_id}
+                  >
+                    {film.title}
+                  </List.Item>
+                );
+              })
+            )}
+          </List>
+        </div>
       </div>
     </div>
   );

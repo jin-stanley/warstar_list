@@ -7,7 +7,7 @@ const PeopleList = ({ currentPage, count, countPerPage, setActivePage }) => {
   };
 
   return (
-    <div>
+    <div className='flex justify-end p-4 border-t-2 border-gray-100'>
       <Pagination
         onPageChange={handleChangePage}
         activePage={currentPage}

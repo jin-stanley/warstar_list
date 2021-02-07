@@ -1,7 +1,9 @@
 import React from 'react';
-import { Table } from 'semantic-ui-react';
+import moment from 'moment';
 
 import '../../style/components/PeopleList/PeopleListTable.scss';
+
+import { Table } from 'semantic-ui-react';
 
 const PeopleListTable = ({ header, content, selected, setSelected }) => {
   const [activePeople, setActivePeople] = React.useState(null);
@@ -19,7 +21,7 @@ const PeopleListTable = ({ header, content, selected, setSelected }) => {
   };
 
   return (
-    <div className='list-table'>
+    <div className='list-table flex-grow'>
       <Table celled className='list-table__table'>
         <Table.Header>
           <Table.Row>
@@ -43,8 +45,15 @@ const PeopleListTable = ({ header, content, selected, setSelected }) => {
                 onClick={(e) => handleSelected(e, data)}
               >
                 <Table.Cell>{data.name}</Table.Cell>
+                <Table.Cell>
+                  {moment(data.created).format('YYYY-MM-DD')}
+                </Table.Cell>
+                <Table.Cell>
+                  {moment(data.edited).format('YYYY-MM-DD')}
+                </Table.Cell>
                 <Table.Cell>{data.height}</Table.Cell>
                 <Table.Cell>{data.mass}</Table.Cell>
+                <Table.Cell>{data.films.length}</Table.Cell>
               </Table.Row>
             );
           })}

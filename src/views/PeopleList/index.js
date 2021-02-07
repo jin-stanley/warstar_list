@@ -12,7 +12,7 @@ import {
 
 import '../../style/views/PeopleList.scss';
 
-import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react';
+import { Dimmer, Loader } from 'semantic-ui-react';
 import PeopleListTable from '../../components/PeopleList/PeopleListTable';
 import PeopleListPagination from '../../components/PeopleList/PeopleListPagination';
 import PeopleListInfoCard from '../../components/PeopleList/PeopleListInfoCard';
@@ -20,7 +20,14 @@ import PeopleListInfoCard from '../../components/PeopleList/PeopleListInfoCard';
 const PeopleList = () => {
   const dispatch = useDispatch();
 
-  const TABLE_COLUMNS = ['Name', 'Height', 'Mass'];
+  const TABLE_COLUMNS = [
+    'Name',
+    'Created',
+    'Edited',
+    'Height',
+    'Mass',
+    'Films'
+  ];
   const peopleList = useSelector(selectPeopleList);
   const peopleListCount = useSelector(selectPeopleListCount);
   const peopleListLoading = useSelector(selectPeopleListLoading);
@@ -37,18 +44,15 @@ const PeopleList = () => {
 
   // Change page method
   const handleChangeActivePage = (pageNumber) => {
-    return dispatch(fetchPeopleListAsync(pageNumber));
+    setSelectedPeople(null)
+    dispatch(fetchPeopleListAsync(pageNumber));
   };
 
   if (peopleListLoading) {
     return (
-      <Segment>
-        <Dimmer active inverted>
-          <Loader size='large'>Loading</Loader>
-        </Dimmer>
-
-        <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />
-      </Segment>
+      <Dimmer active inverted>
+        <Loader size='large'>Loading</Loader>
+      </Dimmer>
     );
   }
 
@@ -73,7 +77,9 @@ const PeopleList = () => {
         />
       </div>
 
-      {selectedPeople && <PeopleListInfoCard data={selectedPeople} />}
+      {selectedPeople && (
+        <PeopleListInfoCard data={selectedPeople} onClose={setSelectedPeople} />
+      )}
     </div>
   );
 };
