@@ -51,6 +51,7 @@ const PeopleListTable = ({ header, content, selected, setSelected }) => {
                 <Table.Cell>
                   {moment(data.edited).format('YYYY-MM-DD')}
                 </Table.Cell>
+                <Table.Cell>{data.gender}</Table.Cell>
                 <Table.Cell>{data.height}</Table.Cell>
                 <Table.Cell>{data.mass}</Table.Cell>
                 <Table.Cell>{data.films.length}</Table.Cell>

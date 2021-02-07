@@ -24,6 +24,7 @@ const PeopleList = () => {
     'Name',
     'Created',
     'Edited',
+    'Gender',
     'Height',
     'Mass',
     'Films'
