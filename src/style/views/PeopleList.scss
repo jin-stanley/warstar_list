@@ -1,0 +1,11 @@
+.people-list {
+  height: 100%;
+  display: flex;
+
+  &__table {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}
